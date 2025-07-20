@@ -265,7 +265,9 @@
             const data = teams[team];
             const card = document.createElement('div');
             card.className = 'team-card';
-            const streams = data.streams.slice(0,3).map(s => `<iframe class="w-full h-56" src="https://player.twitch.tv/?channel=${encodeURIComponent(s.url.split('/').pop())}&parent=${window.location.hostname}" allowfullscreen></iframe>`).join('');
+            const streams = data.streams.map(s =>
+                `<iframe class="w-full h-56" src="https://player.twitch.tv/?channel=${encodeURIComponent(s.url.split('/').pop())}&parent=${window.location.hostname}" allowfullscreen></iframe>`
+            ).join('');
             const links = data.streams.map(s => `<a href="${s.url}" target="_blank" class="text-violet-300 underline mr-2">${s.name}</a>`).join(' ');
             card.innerHTML = `
                 <img src="${data.logo}" alt="${team} logo" class="mb-4">
