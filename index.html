@@ -217,7 +217,7 @@
             const btn = document.createElement('div');
             btn.className = 'team-btn bg-white/20';
             btn.dataset.team = team;
-            btn.innerHTML = <img src="${teams[team].logo}" alt="${team} logo"><div class="text-center text-sm mt-1">${team}</div>;
+            btn.innerHTML = `<img src="${teams[team].logo}" alt="${team} logo"><div class="text-center text-sm mt-1">${team}</div>`;
             btn.onclick = () => toggleTeam(team, btn);
             selector.appendChild(btn);
         }
@@ -258,8 +258,8 @@
             vs.className = 'text-4xl md:text-6xl font-extrabold mx-4';
             matchDiv.appendChild(vs);
             renderTeamCard(t2, matchDiv);
-            document.getElementById('bg-left').style.backgroundImage = url(${teams[t1].logo});
-            document.getElementById('bg-right').style.backgroundImage = url(${teams[t2].logo});
+            document.getElementById('bg-left').style.backgroundImage = `url(${teams[t1].logo})`;
+            document.getElementById('bg-right').style.backgroundImage = `url(${teams[t2].logo})`;
         }
 
         function renderTeamCard(team, container){
@@ -276,7 +276,7 @@
                 <pre class="whitespace-pre-wrap mb-4">${data.roster}</pre>
                 ${streams}
                 <div class="mt-2">${links}</div>
-            ;
+            `;
             container.appendChild(card);
         }
     </script>
