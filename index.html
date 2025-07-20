@@ -31,7 +31,7 @@
             border-radius: 0.5rem;
             transition: transform 0.2s, box-shadow 0.2s;
         }
-        .team-btn img { height: 80px; }
+        .team-btn img { height: 100px; }
         .team-btn.selected {
             transform: scale(1.05);
             box-shadow: 0 0 0 4px rgb(139 92 246);
@@ -56,7 +56,7 @@
     <div id="bg-left"></div>
     <div id="bg-right"></div>
     <section class="max-w-6xl mx-auto p-4">
-        <div id="teamSelector" class="flex overflow-x-auto whitespace-nowrap gap-4 mb-6 px-2"></div>
+        <div id="teamSelector" class="flex whitespace-nowrap gap-4 mb-6 px-2"></div>
         <div id="match" class="flex flex-col md:flex-row items-start justify-center gap-6"></div>
     </section>
     <script>
@@ -217,7 +217,7 @@
             const btn = document.createElement('div');
             btn.className = 'team-btn bg-white/20';
             btn.dataset.team = team;
-            btn.innerHTML = <img src="${teams[team].logo}" alt="${team} logo"><div class="text-center text-sm mt-1">${team}</div>;
+            btn.innerHTML = `<img src="${teams[team].logo}" alt="${team} logo"><div class="text-center text-sm mt-1">${team}</div>`;
             btn.onclick = () => toggleTeam(team, btn);
             selector.appendChild(btn);
         }
@@ -258,25 +258,25 @@
             vs.className = 'text-4xl md:text-6xl font-extrabold mx-4';
             matchDiv.appendChild(vs);
             renderTeamCard(t2, matchDiv);
-            document.getElementById('bg-left').style.backgroundImage = url(${teams[t1].logo});
-            document.getElementById('bg-right').style.backgroundImage = url(${teams[t2].logo});
+            document.getElementById('bg-left').style.backgroundImage = `url(${teams[t1].logo})`;
+            document.getElementById('bg-right').style.backgroundImage = `url(${teams[t2].logo})`;
         }
 
         function renderTeamCard(team, container){
             const data = teams[team];
             const card = document.createElement('div');
             card.className = 'team-card';
-            const streams = data.streams.map(s =>
-                <iframe class="w-full h-56" src="https://player.twitch.tv/?channel=${encodeURIComponent(s.url.split('/').pop())}&parent=${window.location.hostname}" allowfullscreen></iframe>
-            ).join('');
-            const links = data.streams.map(s => <a href="${s.url}" target="_blank" class="text-violet-300 underline mr-2">${s.name}</a>).join(' ');
-            card.innerHTML = 
+            const streams = `<div class="flex flex-row flex-wrap gap-4 overflow-x-auto">${data.streams.map(s =>
+                `<iframe class="w-60 h-56" src="https://player.twitch.tv/?channel=${encodeURIComponent(s.url.split('/').pop())}&parent=${window.location.hostname}" allowfullscreen></iframe>`
+            ).join('')}</div>`;
+            const links = data.streams.map(s => `<a href="${s.url}" target="_blank" class="text-violet-300 underline mr-2">${s.name}</a>`).join(' ');
+            card.innerHTML = `
                 <img src="${data.logo}" alt="${team} logo" class="mb-4">
                 <h2 class="text-2xl font-bold mb-2">${team}</h2>
                 <pre class="whitespace-pre-wrap mb-4">${data.roster}</pre>
                 ${streams}
                 <div class="mt-2">${links}</div>
-            ;
+            `;
             container.appendChild(card);
         }
     </script>
