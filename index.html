@@ -266,11 +266,18 @@
             const data = teams[team];
             const card = document.createElement('div');
             card.className = 'team-card';
+ 52ra38-codex/adjust-team-display-to-single-row
+            const parent = window.location.hostname || 'localhost';
             const streams = `<div class="flex flex-row flex-wrap gap-4 overflow-x-auto">${data.streams.map(s =>
-                `<iframe class="w-60 h-56" src="https://player.twitch.tv/?channel=${encodeURIComponent(s.url.split('/').pop())}&parent=${window.location.hostname}" allowfullscreen></iframe>`
+                `<iframe class="w-60 h-56" src="https://player.twitch.tv/?channel=${encodeURIComponent(s.url.split('/').pop())}&parent=${parent}" allowfullscreen></iframe>`
+            ).join('')}</div>`;
+            const links = data.streams.map(s => `<a href="${s.url}" target="_blank" class="text-violet-300 underline mr-2">${s.name}</a>`).join(' ');
+            card.innerHTML = `
+            const streams = `<div class="flex flex-row flex-wrap gap-4 overflow-x-auto">${data.streams.map(s =>
             ).join('')}</div>`;
             const links = data.streams.map(s => <a href="${s.url}" target="_blank" class="text-violet-300 underline mr-2">${s.name}</a>).join(' ');
             card.innerHTML = 
+ main
                 <img src="${data.logo}" alt="${team} logo" class="mb-4">
                 <h2 class="text-2xl font-bold mb-2">${team}</h2>
                 <pre class="whitespace-pre-wrap mb-4">${data.roster}</pre>
