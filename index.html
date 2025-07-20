@@ -7,9 +7,33 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
         body {
-            background: linear-gradient(to right, #1e3a8a, #9333ea);
+            background: linear-gradient(to right, #0f172a, #4c1d95);
             min-height: 100vh;
             color: #f1f5f9;
+        }
+        #bg-left, #bg-right {
+            position: fixed;
+            top: 0;
+            bottom: 0;
+            width: 50%;
+            opacity: 0.2;
+            background-size: 150px;
+            background-repeat: repeat;
+            pointer-events: none;
+            z-index: -1;
+        }
+        #bg-left { left: 0; }
+        #bg-right { right: 0; }
+        .team-btn {
+            cursor: pointer;
+            padding: 0.5rem;
+            border-radius: 0.5rem;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+        .team-btn img { height: 60px; }
+        .team-btn.selected {
+            transform: scale(1.05);
+            box-shadow: 0 0 0 4px rgb(139 92 246);
         }
         .team-card {
             background: rgba(255, 255, 255, 0.1);
@@ -28,13 +52,10 @@
     <header class="text-center py-6">
         <h1 class="text-4xl font-bold text-violet-400">Tribes Rivals Scrim Watcher</h1>
     </header>
-    <section class="max-w-4xl mx-auto p-4">
-        <div class="flex flex-col md:flex-row justify-center gap-4 mb-6">
-            <select id="team1" class="p-2 rounded text-gray-900"></select>
-            <select id="team2" class="p-2 rounded text-gray-900"></select>
-            <button onclick="showMatch()" class="bg-violet-600 hover:bg-violet-700 text-white px-4 py-2 rounded">Show Match</button>
-        </div>
-        
+    <div id="bg-left"></div>
+    <div id="bg-right"></div>
+    <section class="max-w-6xl mx-auto p-4">
+        <div id="teamSelector" class="flex flex-wrap justify-center gap-4 mb-6"></div>
         <div id="match" class="flex flex-col md:flex-row items-center justify-center gap-6"></div>
     </section>
     <script>
@@ -60,124 +81,12 @@
                     { name: 'Makasuro', url: 'https://www.twitch.tv/makasuro' }
                 ]
             },
-            "DPRK": {
-                logo: "https://github.com/T24085/TeamDPRK/blob/main/TeamDPRKLogo3.png?raw=true",
-                roster: "Roster information not available.",
-                streams: [
-                    { name: 'CheezeCaek', url: 'https://www.twitch.tv/cheezecaek' },
-                    { name: 'silynn', url: 'https://www.twitch.tv/cheddox' },
-                    { name: 'ColonelFatso', url: 'https://www.twitch.tv/colonelfatso' },
-                    { name: 'Pandora', url: 'https://www.twitch.tv/pandoracast' },
-                    { name: 'Nemesis', url: 'https://www.twitch.tv/seansguitarworldbang' }
-                ]
-            },
-            "Zen": {
-                logo: "https://github.com/T24085/Team-Zen/blob/main/Zenlogo.png?raw=true",
-                roster: "Captain: @ℨ Gigz\nCore: Beamz, Hydroxide, Gnome, Slyce, Mikesters, Twin\nBench: Flocks\nNote: DM Cats/Glem to update the roster",
-                streams: [
-                    { name: 'Mikesters', url: 'https://www.twitch.tv/mikesters17' },
-                    
-                    { name: 'Nikebeamz', url: 'https://www.twitch.tv/nikebeamz' },
-                    { name: 'Gnome', url: 'https://www.twitch.tv/gnome827' }
-                ]
-            },
-            "TXM": {
-                logo: "https://github.com/T24085/Team-TXM/blob/main/TXM.png?raw=true",
-                roster: "Captain: @OpCats (LO/LD)\nCore: Prizzo, Cryof, Amyou, Thatguy, Visis, Jive, Freefood, Howsya\nBench: Txredneck",
-                streams: [
-                    { name: 'Prizzo', url: 'https://www.twitch.tv/prizzo4real' },
-                    { name: 'OperationCats', url: 'https://www.twitch.tv/operationcats' },
-                    { name: 'Goshawk', url: 'https://www.twitch.tv/g0shawk' },
-                    { name: 'Visis', url: 'https://www.twitch.tv/visisgaming' },
-                    { name: 'Cryof', url: 'https://www.twitch.tv/cryofzshooter' },
-                    { name: 'Jive', url: 'https://www.twitch.tv/heavenlyjive' },
-                    { name: 'freefood', url: 'https://www.twitch.tv/freefoodd' },
-                    { name: 'Howsya', url: 'https://www.twitch.tv/howsya' }
-                ]
-            },
-            "FPS": {
-                logo: "https://github.com/T24085/Team-FPS/blob/main/FPSlogo.png?raw=true",
-                roster: "Captain: @S...\nCore: Brit, Icedwinds, Dugong, Beldark, Realhumanbeing, Simmons, Nightstar\nBench: Kilfaxi, Morokor",
-                streams: [
-                    { name: 'SulliedSoc', url: 'https://www.twitch.tv/SulliedSoc' },
-                    
-                    { name: 'Beldark', url: 'https://www.twitch.tv/beldarkk' },
-                    { name: 'Simmons', url: 'https://www.twitch.tv/simmons572' }
-                ]
-            },
-            "FT": {
-                logo: "https://github.com/T24085/Team-FT/blob/main/FTlogo.png?raw=true",
-                roster: "Captain: @p...\nCore: Bizow, Zao, Dreadtitan, nato, LightningMcMeme, Orvid, Bazz-B",
-                streams: [
-                    { name: 'Mikeax2', url: 'https://www.twitch.tv/mikeax2' },
-                    { name: 'nato', url: 'https://www.twitch.tv/natopotato262' },
-                    
-                    { name: 'playb0x', url: 'https://www.twitch.tv/playb0x' },
-                    { name: 'Dreadtitan', url: 'https://www.twitch.tv/dreadtitan' }
-                ]
-            },
-            "HoE": {
-                logo: "https://github.com/T24085/Team-HOE/blob/main/HoE.png?raw=true",
-                roster: "Captain: @[ɧơɛ] Katar Xwokark\nCore: Gotlub, Mansku, Lord Buschguy, björnbär, Waffleking, TribalChief\nBench: cym3, Gwej, tumi, ThermoFlux, unam",
-                streams: [
-                    { name: 'Katar', url: 'https://www.twitch.tv/karolk10' },
-                    { name: 'gwej', url: 'https://www.twitch.tv/gwej' },
-                    
-                    { name: 'cym3', url: 'https://www.twitch.tv/cymm3' },
-                    { name: 'LordBuschguy', url: 'https://www.twitch.tv/lordbuschguy' }
-                ]
-            },
-            "KTL": {
-                logo: "https://github.com/T24085/Team-KTL/blob/main/KTLlogo.png?raw=true",
-                roster: "Captain: @n0xide\nCore: =ACE=, Navy, ctrl, kwago, Paragon, SecondSight, Torment, Alphakrab",
-                
-                streams: [
-                    { name: 'isoitiro', url: 'https://www.twitch.tv/isoitiro' }
-                ]
-            },
-            "Magic": {
-                logo: "https://github.com/T24085/Team-Magic/blob/main/Magic.png?raw=true",
-                roster: "Captain: @[wiz] Lange\nCore: Rebeltrooper, XRY, Dust, Cinnamon, Songsteal, Sek, SplitSecond\nBench: Snakke, Lester",
-                streams: [
-                    { name: 'XRY', url: 'https://www.twitch.tv/xry_tv' },
-                    { name: 'Splitsecond', url: 'https://www.twitch.tv/splitsecondta' },
-                    
-                    { name: 'Howsya', url: 'https://www.twitch.tv/howsya' },
-                    { name: 'Vaxity', url: 'https://www.twitch.tv/vaxitylol' }
-                ]
-            },
-            "null": {
-                logo: "https://github.com/T24085/Team-Null/blob/main/NullLogo.png?raw=true",
-                roster: "Captain: @_...\nCore: Blaspheme, Annaberries, xQ, muuki, exhumaxer, corbeling, mikeax2\nBench: ryan",
-                
-                streams: [
-                    { name: 'z4t01', url: 'https://www.twitch.tv/z4t01' }
-                ]
-            },
-            "Toxic Aimers": {
-                logo: "https://github.com/T24085/Team-Toxic-Aimers/blob/main/ToxicAimersLogo.png?raw=true",
-                roster: "Captain: @R...\nCore: Song, Sek, Hatuey, DareDevilMoon, Nerve, Radishblue, Trey\nBench: Sin, Stork",
-                
-                streams: [
-                    { name: 'Stork', url: 'https://www.twitch.tv/storksoofly' }
-                ]
-            },
-            "Tribal Therapy": {
-                logo: "https://github.com/T24085/Team-Tribal-Therapy/blob/main/T_TLogo.png?raw=true",
-                roster: "Captain: Blitz\nCore: apc, Hosh, Luna, Rock, Rell, Iinferno, Makasuro, CheesyDean, ContingencyPlan\nBench: Nykie4Life",
-                streams: [
-                    { name: 'iinferno', url: 'https://www.twitch.tv/bschrift/video/2399902418' },
-                    { name: 'Paprika (YT)', url: 'https://www.youtube.com/@0Luna_' },
-                    
-                    { name: 'Blitz', url: 'https://www.twitch.tv/slohp0k3' },
-                    { name: 'apc', url: 'https://www.twitch.tv/apcizzle' },
-                    { name: 'Makasuro', url: 'https://www.twitch.tv/makasuro' }
+@@ -165,70 +187,95 @@
                 ]
             },
             "Viva la Revolución": {
                 logo: "https://github.com/T24085/Team-R/blob/main/Rlogo.png?raw=true",
                 roster: "Captain: @Borpalkitty\nCore: Visis, Barthy, OperationCats, Jive, Oo 0 oO, Hitch, Zack, Kadenzah",
-                
                 streams: [
                     { name: 'OperationCats', url: 'https://www.twitch.tv/operationcats' },
                     { name: 'Jive', url: 'https://www.twitch.tv/heavenlyjive' },
@@ -192,24 +101,51 @@
                     { name: 'RoamenCota', url: 'https://www.twitch.tv/roamencota' },
                     { name: 'Simmons', url: 'https://www.twitch.tv/simmons572' },
                     { name: 'Def_Monk (YT)', url: 'https://www.youtube.com/@defmonk0/streams' },
-                    
                     { name: 'Deadmanwalking (YT)', url: 'https://www.youtube.com/@DeadManWalking-UF-/streams' },
                     { name: 'Ghost_Loot', url: 'https://www.twitch.tv/ghost_loot' }
                 ]
             }
         };
 
-        const select1 = document.getElementById('team1');
-        const select2 = document.getElementById('team2');
+        const selector = document.getElementById('teamSelector');
+        let selections = [];
+
         for(const team in teams){
-            const opt1 = document.createElement('option');
-            opt1.value = team; opt1.textContent = team; select1.appendChild(opt1.cloneNode(true));
-            select2.appendChild(opt1);
+            const btn = document.createElement('div');
+            btn.className = 'team-btn bg-white/20';
+            btn.dataset.team = team;
+            btn.innerHTML = `<img src="${teams[team].logo}" alt="${team} logo"><div class="text-center text-sm mt-1">${team}</div>`;
+            btn.onclick = () => toggleTeam(team, btn);
+            selector.appendChild(btn);
         }
 
-        function showMatch(){
-            const t1 = select1.value;
-            const t2 = select2.value;
+        function toggleTeam(team, el){
+            if(selections.includes(team)){
+                selections = selections.filter(t => t !== team);
+            } else if(selections.length < 2){
+                selections.push(team);
+            } else {
+                selections.shift();
+                selections.push(team);
+            }
+            updateSelection();
+        }
+
+        function updateSelection(){
+            document.querySelectorAll('.team-btn').forEach(btn => {
+                btn.classList.toggle('selected', selections.includes(btn.dataset.team));
+            });
+            const matchDiv = document.getElementById('match');
+            matchDiv.innerHTML = '';
+            if(selections.length === 2){
+                showMatch(selections[0], selections[1]);
+            } else {
+                document.getElementById('bg-left').style.backgroundImage = '';
+                document.getElementById('bg-right').style.backgroundImage = '';
+            }
+        }
+
+        function showMatch(t1, t2){
             const matchDiv = document.getElementById('match');
             matchDiv.innerHTML = '';
             if(!t1 || !t2){ return; }
@@ -219,11 +155,8 @@
             vs.className = 'text-4xl md:text-6xl font-extrabold mx-4';
             matchDiv.appendChild(vs);
             renderTeamCard(t2, matchDiv);
-
-            document.body.style.backgroundImage = `url(${teams[t1].logo}), url(${teams[t2].logo}), linear-gradient(to right, #1e3a8a, #9333ea)`;
-            document.body.style.backgroundRepeat = 'repeat, repeat, no-repeat';
-            document.body.style.backgroundSize = '200px, 200px, cover';
-            document.body.style.backgroundPosition = 'left top, right top, center';
+            document.getElementById('bg-left').style.backgroundImage = `url(${teams[t1].logo})`;
+            document.getElementById('bg-right').style.backgroundImage = `url(${teams[t2].logo})`;
         }
 
         function renderTeamCard(team, container){
